@@ -1,0 +1,45 @@
+---
+import Base from "../layouts/Base.astro";
+import { CONTACT, SOCIAL, MAPS_LINK } from "../config";
+---
+
+<Base
+  title="Contact"
+  description="Get in touch with Le Marché Bleu in Fort Worth — call (817) 782-9353, email us, or find us on Instagram, LinkedIn, and Yelp."
+>
+  <section class="section">
+    <div class="container center">
+      <h1><span class="script-accent">Écrivez-Nous</span>Contact</h1>
+      <p class="lead">We'd love to hear from you.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="card-grid">
+        <div class="card">
+          <h3>Call or Email</h3>
+          <p><a href={CONTACT.phoneHref}>{CONTACT.phone}</a></p>
+          <p><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></p>
+        </div>
+        <div class="card">
+          <h3>Find Us</h3>
+          <p>
+            <a href={MAPS_LINK} rel="noopener" target="_blank">
+              {CONTACT.addressLine1}<br />
+              {CONTACT.addressLine2}
+            </a>
+          </p>
+        </div>
+        <div class="card">
+          <h3>Follow Along</h3>
+          <p>
+            <a href={SOCIAL.instagram} rel="noopener">Instagram</a><br />
+            <a href={SOCIAL.linkedin} rel="noopener">LinkedIn</a><br />
+            <a href={SOCIAL.yelp} rel="noopener">Yelp</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

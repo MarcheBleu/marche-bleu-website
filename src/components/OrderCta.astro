@@ -1,0 +1,9 @@
+---
+// The site's single call to action: every order button on the site is this
+// component, linking only to DoorDash (per scope — no other platforms).
+import { DOORDASH_URL } from "../config";
+---
+
+<a class="btn-order" href={DOORDASH_URL} target="_blank" rel="noopener">
+  Order Ahead
+</a>

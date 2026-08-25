@@ -1,0 +1,30 @@
+# Netlify configuration for the Le Marché Bleu static site.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Keep the staging deploy out of search engines until DNS cutover.
+# IMPORTANT: remove (or comment out) this headers block at launch so the
+# real site can be indexed.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+
+# The market page was removed; send any old links home.
+[[redirects]]
+  from = "/market/*"
+  to = "/"
+  status = 301
+
+# Long-cache immutable assets (fonts and Astro's hashed build output).
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

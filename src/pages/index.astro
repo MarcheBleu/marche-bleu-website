@@ -1,0 +1,147 @@
+---
+import Base from "../layouts/Base.astro";
+import OrderCta from "../components/OrderCta.astro";
+import { SITE, HAPPY_HOUR } from "../config";
+import { Image } from "astro:assets";
+import logoHorizWhite from "../assets/logos/mb_horiz_white.svg";
+import heroPhoto from "../assets/photos/8B7A1942.jpeg";
+import mugPhoto from "../assets/photos/8B7A1967.jpeg";
+import wineGlass from "../assets/photos/wine-glass-marble.jpg";
+import tileCafe from "../assets/tiles/cafe.jpg";
+import tileMarket from "../assets/tiles/market.jpg";
+import tileWine from "../assets/tiles/wine.jpg";
+---
+
+<Base title="Home" description={SITE.description}>
+  <section class="hero">
+    <div class="hero-bg">
+      <Image
+        class="hero-photo"
+        src={heroPhoto}
+        alt=""
+        widths={[640, 1024, 1600]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <video
+        class="hero-video"
+        src="/hero-mobile.mp4"
+        poster="/hero-mobile-poster.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+      ></video>
+    </div>
+    <div class="hero-inner">
+      <img
+        class="hero-logo"
+        src={logoHorizWhite.src}
+        alt={`${SITE.name} — Market & Café, Fort Worth TX`}
+        width="416"
+        height="102"
+      />
+      <p class="tagline">Café · Market · Wine Bar</p>
+      <OrderCta />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container center">
+      <h2><span class="script-accent">Bienvenue</span>More Than a Café</h2>
+      <p class="lead">Whether it's 5&nbsp;am… or 5&nbsp;pm.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="tile-grid">
+        <a class="tile" href="/menu/">
+          <Image
+            src={tileCafe}
+            alt="The marble coffee bar inside Le Marché Bleu"
+            widths={[480, 900]}
+            sizes="(max-width: 48rem) 100vw, 22rem"
+          />
+          <span class="tile-label">
+            <h3>The Café</h3>
+            <p>Espresso, breakfast &amp; lunch — fresh daily</p>
+            <span class="tile-cta">View the Menu</span>
+          </span>
+        </a>
+        <a class="tile" href="/about/">
+          <Image
+            src={tileMarket}
+            alt="Inside the Marché Bleu market at the Shops at Clearfork"
+            widths={[480, 900]}
+            sizes="(max-width: 48rem) 100vw, 22rem"
+          />
+          <span class="tile-label">
+            <h3>The Market</h3>
+            <p>Local goods &amp; gourmet finds — in store only</p>
+            <span class="tile-cta">Visit Us</span>
+          </span>
+        </a>
+        <a class="tile" href="#happy-hour">
+          <Image
+            src={tileWine}
+            alt="The curated wine wall at Le Marché Bleu"
+            widths={[480, 900]}
+            sizes="(max-width: 48rem) 100vw, 22rem"
+          />
+          <span class="tile-label">
+            <h3>The Wine Bar</h3>
+            <p>Curated bottles &amp; daily happy hour</p>
+            <span class="tile-cta">Happy Hour</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="happy-hour" style="scroll-margin-top: 6rem;">
+    <div class="container">
+      <div class="split">
+        <Image
+          src={wineGlass}
+          alt="A glass of red wine in the afternoon light on the marble table"
+          widths={[480]}
+          sizes="(max-width: 48rem) 100vw, 33rem"
+        />
+        <div>
+          <h2><span class="script-accent">Santé</span>Happy Hour</h2>
+          <p class="lead">{HAPPY_HOUR.when}<br />{HAPPY_HOUR.deal}</p>
+          <p>15% off when you take home six bottles.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="split">
+        <div>
+          <h2><span class="script-accent">Notre Histoire</span>A little corner of France</h2>
+          <p class="lead"><em>“Happiness is in breakfast.”</em> — Jacques Prévert</p>
+          <p><a href="/about/">Plan your visit →</a></p>
+        </div>
+        <Image
+          src={mugPhoto}
+          alt="Marché Bleu monogram mug beside a fresh croissant"
+          widths={[640, 1200]}
+          sizes="(max-width: 48rem) 100vw, 33rem"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section center">
+    <div class="container">
+      <h2><span class="script-accent">À bientôt</span>Ready when you are</h2>
+      <p><OrderCta /></p>
+    </div>
+  </section>
+</Base>

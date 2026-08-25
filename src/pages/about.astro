@@ -1,0 +1,111 @@
+---
+import Base from "../layouts/Base.astro";
+import { CONTACT, HOURS, HAPPY_HOUR, MAP_EMBED_URL, MAPS_LINK } from "../config";
+import { Image } from "astro:assets";
+import mugPhoto from "../assets/photos/8B7A1967.jpeg";
+import marketCoolers from "../assets/photos/market-coolers.jpg";
+---
+
+<Base
+  title="Visit Us"
+  description="Visit Le Marché Bleu at 5256 Marathon Ave, Fort Worth, TX 76109. Hours, location, and what to expect from Fort Worth's French-inspired café, market & wine bar."
+>
+  <section class="section">
+    <div class="container center">
+      <h1><span class="script-accent">Bonjour</span>Visit Us</h1>
+      <p class="lead">5256 Marathon Ave · Fort Worth</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="card-grid">
+        <div class="card">
+          <h3>Location</h3>
+          <p>
+            <a href={MAPS_LINK} rel="noopener" target="_blank">
+              {CONTACT.addressLine1}<br />
+              {CONTACT.addressLine2}
+            </a>
+          </p>
+          <p><a href={CONTACT.phoneHref}>{CONTACT.phone}</a></p>
+          <p><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></p>
+        </div>
+        <div class="card">
+          <h3>Hours</h3>
+          <table class="hours-table">
+            <tbody>
+              {HOURS.map((h) => (
+                <tr>
+                  <td>{h.days}</td>
+                  <td>{h.time}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Happy Hour</h3>
+          <p>
+            {HAPPY_HOUR.when}<br />
+            {HAPPY_HOUR.deal}
+          </p>
+          <p>Plus 15% off when you take home six bottles of wine.</p>
+        </div>
+      </div>
+
+      {MAP_EMBED_URL ? (
+        <div class="map-wrap">
+          <iframe
+            src={MAP_EMBED_URL}
+            title="Map to Le Marché Bleu, 5256 Marathon Ave, Fort Worth"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          />
+        </div>
+      ) : (
+        <div class="map-placeholder">Map coming soon</div>
+      )}
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="split">
+        <Image
+          src={marketCoolers}
+          alt="The market's drink and grab-and-go coolers inside Le Marché Bleu"
+          widths={[640, 1200]}
+          sizes="(max-width: 48rem) 100vw, 33rem"
+        />
+        <div>
+          <h2><span class="script-accent">Le Marché</span>Our Selection Is Our Mission</h2>
+          <p class="lead">
+            Local artisans · health-conscious choices · extraordinary
+            flavors. In store only — come browse.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="split">
+        <div>
+          <h2><span class="script-accent">Notre Histoire</span>Our Story</h2>
+          <p class="lead">
+            A little corner of France in Fort Worth. Whether it's
+            5&nbsp;am… or 5&nbsp;pm, this is your all day spot.
+          </p>
+        </div>
+        <Image
+          src={mugPhoto}
+          alt="Marché Bleu monogram mug beside a fresh croissant"
+          widths={[640, 1200]}
+          sizes="(max-width: 48rem) 100vw, 33rem"
+        />
+      </div>
+    </div>
+  </section>
+</Base>

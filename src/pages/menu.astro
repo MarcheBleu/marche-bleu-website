@@ -1,0 +1,67 @@
+---
+import Base from "../layouts/Base.astro";
+import OrderCta from "../components/OrderCta.astro";
+import { MENU } from "../menu-data";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+const photos = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/menu/*.jpg",
+  { eager: true },
+);
+const photoFor = (slug: string) => {
+  const mod = photos[`../assets/menu/${slug}.jpg`];
+  if (!mod) throw new Error(`Missing menu photo: ${slug}.jpg`);
+  return mod.default;
+};
+---
+
+<Base
+  title="Café Menu"
+  description="The Le Marché Bleu café menu — coffee, tea, specialty drinks, breakfast, and lunch, made fresh daily in Fort Worth. Order ahead for pickup."
+>
+  <section class="section">
+    <div class="container center">
+      <h1><span class="script-accent">Le Menu</span>Café Menu</h1>
+      <p class="lead">Made fresh daily — order ahead for pickup.</p>
+      <p><OrderCta /></p>
+      <nav aria-label="Menu sections">
+        <ul class="menu-jump">
+          {MENU.map((s) => (
+            <li><a href={`#${s.id}`}>{s.title}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      {MENU.map((section) => (
+        <div class="menu-section" id={section.id}>
+          <h2>{section.title}</h2>
+          {section.note && <p class="note">{section.note}</p>}
+          <div class="menu-items">
+            {section.items.map((item) => (
+              <div class="menu-item">
+                <Image
+                  src={photoFor(item.image)}
+                  alt={item.name}
+                  widths={[400, 700]}
+                  sizes="(max-width: 34rem) 90vw, 18rem"
+                  loading="lazy"
+                />
+                <span class="name">{item.name}</span>
+                {item.description && <p class="desc">{item.description}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+      <p class="lead center" style="margin: 2rem auto 1.5rem;">
+        Current pricing on DoorDash · Wine &amp; beer served in store
+      </p>
+      <p class="center"><OrderCta /></p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,152 @@
+---
+import Base from "../layouts/Base.astro";
+import { CATERING } from "../catering-data";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+const photos = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/catering/*.{jpg,png}",
+  { eager: true },
+);
+const photoFor = (slug: string) => {
+  const mod =
+    photos[`../assets/catering/${slug}.jpg`] ??
+    photos[`../assets/catering/${slug}.png`];
+  if (!mod) throw new Error(`Missing catering photo: ${slug}`);
+  return mod.default;
+};
+---
+
+<Base
+  title="Catering + Events"
+  description="Catering and events by Le Marché Bleu in Fort Worth — beverage, breakfast, and lunch & dinner catering menus. Free delivery on orders over $250. Send an inquiry and our team will follow up."
+>
+  <section class="section">
+    <div class="container center">
+      <h1><span class="script-accent">La Fête</span>Catering + Events</h1>
+      <p class="lead">Make your event unforgettable.</p>
+      <nav aria-label="Catering menus">
+        <ul class="menu-jump">
+          {CATERING.map((s) => (
+            <li><a href={`#${s.id}`}>{s.title}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="tile-grid">
+        {CATERING.map((s) => (
+          <a class="tile" href={`#${s.id}`}>
+            <Image
+              src={photoFor(s.tileImage)}
+              alt=""
+              widths={[480, 900]}
+              sizes="(max-width: 48rem) 100vw, 22rem"
+            />
+            <span class="tile-label">
+              <h3>{s.title}</h3>
+              <p>{s.tagline}</p>
+              <span class="tile-cta">See the Menu</span>
+            </span>
+          </a>
+        ))}
+      </div>
+      <p class="lead center" style="margin: 2rem auto 0;">
+        Free delivery on orders over $250
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      {CATERING.map((section) => (
+        <div class="menu-section" id={section.id}>
+          <h2>{section.title}</h2>
+          {section.note && <p class="note">{section.note}</p>}
+          <div class="menu-items">
+            {section.items.map((item) => (
+              <div class="menu-item">
+                <Image
+                  src={photoFor(item.image)}
+                  alt={item.name}
+                  widths={[400, 700]}
+                  sizes="(max-width: 34rem) 90vw, 18rem"
+                  loading="lazy"
+                />
+                <span class="name">{item.name}</span>
+                {item.description && <p class="desc">{item.description}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <h2>Tell us about your event</h2>
+      <p class="lead">
+        Our team will follow up to confirm details — no payment collected
+        online.
+      </p>
+
+      <form
+        class="form-grid card"
+        style="max-width: 40rem;"
+        name="catering"
+        method="POST"
+        action="/catering/merci/"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+      >
+        <input type="hidden" name="form-name" value="catering" />
+        <p hidden aria-hidden="true">
+          <label>Don't fill this out: <input name="bot-field" /></label>
+        </p>
+
+        <div class="form-field">
+          <label for="name">Name *</label>
+          <input id="name" name="name" type="text" required autocomplete="name" />
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" required autocomplete="email" />
+          </div>
+          <div class="form-field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="event-date">Event date *</label>
+            <input id="event-date" name="event-date" type="date" required />
+          </div>
+          <div class="form-field">
+            <label for="headcount">Headcount *</label>
+            <input id="headcount" name="headcount" type="number" min="1" required />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="interests">What are you interested in?</label>
+          <input
+            id="interests"
+            name="interests"
+            type="text"
+            placeholder="e.g. beverage catering, breakfast tacos, lunch platters…"
+          />
+        </div>
+        <div class="form-field">
+          <label for="notes">Anything else we should know?</label>
+          <textarea id="notes" name="notes" rows="5"></textarea>
+        </div>
+        <button class="btn-order" type="submit">Send Inquiry</button>
+      </form>
+    </div>
+  </section>
+</Base>

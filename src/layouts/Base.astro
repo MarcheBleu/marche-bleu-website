@@ -1,0 +1,173 @@
+---
+import "../styles/global.css";
+import { SITE, CONTACT, HOURS, SOCIAL, ANNOUNCEMENT, DOORDASH_URL, MAPS_LINK } from "../config";
+import OrderCta from "../components/OrderCta.astro";
+import logoHorizRgb from "../assets/logos/mb_horiz_rgb.svg";
+import logoHorizWhite from "../assets/logos/mb_horiz_white.svg";
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage = "/og.jpg" } = Astro.props;
+const fullTitle = `${title} | ${SITE.name} — Café, Market & Wine Bar, Fort Worth TX`;
+const canonical = new URL(Astro.url.pathname, SITE.domain).href;
+const currentPath = Astro.url.pathname;
+
+const NAV = [
+  { href: "/", label: "Home" },
+  { href: "/menu/", label: "Menu" },
+  { href: "/catering/", label: "Catering + Events" },
+  { href: "/about/", label: "Visit" },
+  { href: "/contact/", label: "Contact" },
+];
+
+const isCurrent = (href: string) =>
+  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+
+// Local-business structured data for search engines / maps.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CafeOrCoffeeShop",
+  name: SITE.name,
+  alternateName: SITE.shortName,
+  description: SITE.description,
+  url: SITE.domain,
+  telephone: "+1-817-782-9353",
+  email: CONTACT.email,
+  servesCuisine: ["Cafe", "French", "American"],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: CONTACT.addressLine1,
+    addressLocality: "Fort Worth",
+    addressRegion: "TX",
+    postalCode: "76109",
+    addressCountry: "US",
+  },
+  geo: { "@type": "GeoCoordinates", latitude: 32.709089, longitude: -97.400621 },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+      opens: "07:00",
+      closes: "21:00",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Friday", "Saturday"],
+      opens: "08:00",
+      closes: "22:00",
+    },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: "Sunday", opens: "08:00", closes: "20:00" },
+  ],
+  hasMenu: new URL("/menu/", SITE.domain).href,
+  sameAs: [SOCIAL.instagram, SOCIAL.linkedin, SOCIAL.yelp].filter(Boolean),
+  potentialAction: {
+    "@type": "OrderAction",
+    target: DOORDASH_URL,
+  },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preload" href="/fonts/Nesans-SemiBold.otf" as="font" type="font/otf" crossorigin />
+    <link rel="preload" href="/fonts/Poppins-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, SITE.domain).href} />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    {ANNOUNCEMENT && <div class="announcement">{ANNOUNCEMENT}</div>}
+
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="/" aria-label={`${SITE.name} home`}>
+          <img src={logoHorizRgb.src} alt={`${SITE.name} — Market & Café`} width="220" height="54" />
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          {NAV.map((item) => (
+            <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+              {item.label}
+            </a>
+          ))}
+          <OrderCta />
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <img class="footer-logo" src={logoHorizWhite.src} alt="" width="220" height="54" />
+        <div class="footer-cols">
+          <div>
+            <h3>Visit</h3>
+            <ul>
+              <li>
+                <a href={MAPS_LINK} rel="noopener" target="_blank">
+                  {CONTACT.addressLine1}<br />{CONTACT.addressLine2}
+                </a>
+              </li>
+              <li><a href={CONTACT.phoneHref}>{CONTACT.phone}</a></li>
+              <li><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Hours</h3>
+            <ul>
+              {HOURS.map((h) => (
+                <li>
+                  {h.days}: {h.time}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3>Follow</h3>
+            <ul>
+              {SOCIAL.instagram && (
+                <li><a href={SOCIAL.instagram} rel="noopener">Instagram</a></li>
+              )}
+              {SOCIAL.linkedin && (
+                <li><a href={SOCIAL.linkedin} rel="noopener">LinkedIn</a></li>
+              )}
+              {SOCIAL.yelp && <li><a href={SOCIAL.yelp} rel="noopener">Yelp</a></li>}
+            </ul>
+          </div>
+          <div>
+            <h3>Order</h3>
+            <p style="margin-bottom: 1rem;">
+              Café favorites, ready when you are.
+            </p>
+            <OrderCta />
+          </div>
+        </div>
+        <p class="fine-print">
+          © {new Date().getFullYear()} {SITE.name} · {SITE.tagline} · Market
+          &amp; retail items available in store only.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
