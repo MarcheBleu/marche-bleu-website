@@ -127,6 +127,7 @@ const photoFor = (slug: string) => {
           <div class="form-field">
             <label for="event-date">Event date *</label>
             <input id="event-date" name="event-date" type="date" required />
+            <p class="field-hint">Please allow at least 48 hours' notice</p>
           </div>
           <div class="form-field">
             <label for="headcount">Headcount *</label>
@@ -134,7 +135,7 @@ const photoFor = (slug: string) => {
           </div>
         </div>
         <fieldset class="choice-fieldset">
-          <legend>What type of catering are you looking for?</legend>
+          <legend>What type of catering are you looking for? <span class="legend-hint">Select all that apply</span></legend>
           <div class="choice-grid">
             {CATERING.map((s) => (
               <label class="choice">
@@ -152,7 +153,7 @@ const photoFor = (slug: string) => {
 
         {CATERING.map((s) => (
           <fieldset class="choice-fieldset" id={`items-${s.id}`} hidden>
-            <legend>Which {s.title.toLowerCase()} items?</legend>
+            <legend>Which {s.title.toLowerCase()} items? <span class="legend-hint">Select all that apply</span></legend>
             <div class="choice-grid">
               {s.items.map((i) => (
                 <label class="choice">
@@ -184,6 +185,13 @@ const photoFor = (slug: string) => {
   </section>
 
   <script>
+    // Catering needs 48 hours' notice — block earlier dates in the picker.
+    const dateInput = document.getElementById("event-date") as HTMLInputElement | null;
+    if (dateInput) {
+      const min = new Date(Date.now() + 48 * 60 * 60 * 1000);
+      dateInput.min = min.toISOString().slice(0, 10);
+    }
+
     document
       .querySelectorAll<HTMLInputElement>("[data-type-toggle]")
       .forEach((cb) => {
