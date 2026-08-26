@@ -634,6 +634,50 @@ button.btn-order {
   justify-self: start;
 }
 
+/* Checkbox groups in the catering form */
+.choice-fieldset {
+  border: 1px solid var(--taupe);
+  border-radius: 6px;
+  background: #fffdfb;
+  padding: 1rem 1.2rem 1.2rem;
+  margin: 0;
+}
+
+.choice-fieldset legend {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--navy);
+  padding: 0 0.4rem;
+}
+
+.choice-grid {
+  display: grid;
+  gap: 0.55rem 1.25rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 34rem) {
+  .choice-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.choice input[type="checkbox"] {
+  accent-color: var(--gold);
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
 /* ---------- Hours table ---------- */
 .hours-table {
   border-collapse: collapse;

@@ -25,11 +25,13 @@ const photoFor = (slug: string) => {
     <div class="container center">
       <h1><span class="script-accent">La Fête</span>Catering + Events</h1>
       <p class="lead">Make your event unforgettable.</p>
+      <p><a class="btn-order" href="#inquiry">Request a Quote</a></p>
       <nav aria-label="Catering menus">
         <ul class="menu-jump">
           {CATERING.map((s) => (
             <li><a href={`#${s.id}`}>{s.title}</a></li>
           ))}
+          <li><a href="#inquiry">Request a Quote</a></li>
         </ul>
       </nav>
     </div>
@@ -86,12 +88,11 @@ const photoFor = (slug: string) => {
     </div>
   </section>
 
-  <section class="section" style="padding-top: 0;">
+  <section class="section" id="inquiry" style="padding-top: 0; scroll-margin-top: 6rem;">
     <div class="container">
       <h2>Tell us about your event</h2>
       <p class="lead">
-        Our team will follow up to confirm details — no payment collected
-        online.
+        Our team will follow up with a quote — no payment collected online.
       </p>
 
       <form
@@ -132,15 +133,47 @@ const photoFor = (slug: string) => {
             <input id="headcount" name="headcount" type="number" min="1" required />
           </div>
         </div>
-        <div class="form-field">
-          <label for="interests">What are you interested in?</label>
-          <input
-            id="interests"
-            name="interests"
-            type="text"
-            placeholder="e.g. beverage catering, breakfast tacos, lunch platters…"
-          />
-        </div>
+        <fieldset class="choice-fieldset">
+          <legend>What type of catering are you looking for?</legend>
+          <div class="choice-grid">
+            {CATERING.map((s) => (
+              <label class="choice">
+                <input
+                  type="checkbox"
+                  name="catering-type"
+                  value={s.title}
+                  data-type-toggle={s.id}
+                />
+                {s.title}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        {CATERING.map((s) => (
+          <fieldset class="choice-fieldset" id={`items-${s.id}`} hidden>
+            <legend>Which {s.title.toLowerCase()} items?</legend>
+            <div class="choice-grid">
+              {s.items.map((i) => (
+                <label class="choice">
+                  <input type="checkbox" name={`${s.id}-items`} value={i.name} />
+                  {i.name}
+                </label>
+              ))}
+              {s.id === "beverage" && (
+                <label class="choice">
+                  <input
+                    type="checkbox"
+                    name="beverage-items"
+                    value="Canned Beverages (20-can minimum)"
+                  />
+                  Canned Beverages (20-can minimum)
+                </label>
+              )}
+            </div>
+          </fieldset>
+        ))}
+
         <div class="form-field">
           <label for="notes">Anything else we should know?</label>
           <textarea id="notes" name="notes" rows="5"></textarea>
@@ -149,4 +182,21 @@ const photoFor = (slug: string) => {
       </form>
     </div>
   </section>
+
+  <script>
+    document
+      .querySelectorAll<HTMLInputElement>("[data-type-toggle]")
+      .forEach((cb) => {
+        const group = document.getElementById(`items-${cb.dataset.typeToggle}`);
+        if (!group) return;
+        cb.addEventListener("change", () => {
+          group.hidden = !cb.checked;
+          if (!cb.checked) {
+            group
+              .querySelectorAll<HTMLInputElement>("input[type=checkbox]")
+              .forEach((item) => (item.checked = false));
+          }
+        });
+      });
+  </script>
 </Base>
