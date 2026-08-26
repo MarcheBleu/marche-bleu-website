@@ -46,6 +46,7 @@ export const CATERING: CateringSection[] = [
       { name: "Pastry Assortment", description: "A baker's tray of croissants, pastries, and sweet treats", image: "pastry-assortment" },
       { name: "Avocado Toast Self-Serve Bundle", description: "10 servings", image: "avocado-toast-bundle" },
       { name: "Breakfast Tacos", description: "Your choice: Egg White Capri, Farmhouse LUX Sausage, Lebanese Potato, or Mediterranean Bacon", image: "tacos-bacon" },
+      { name: "Bagels", description: "Everything, gluten free, plain, or rosemary garlic — with butter, cream cheese, honey, or hot honey", image: "bagels" },
     ],
   },
   {
