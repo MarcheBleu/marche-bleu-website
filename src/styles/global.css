@@ -163,8 +163,19 @@ a {
   padding: 0 1.25rem;
 }
 
+/* Vertical rhythm: sections breathe ~72px on desktop, ~48px on phones.
+   A page's title block (.section--head) sits closer to its content. */
 .section {
-  padding: 4.5rem 0;
+  padding-block: clamp(3rem, 7vw, 4.5rem);
+}
+
+.section--head {
+  padding-block: clamp(2.5rem, 6vw, 3.75rem) 2.5rem;
+}
+
+/* Intro heading that shares a section with its content below. */
+.section-intro {
+  margin-bottom: 2.5rem;
 }
 
 .lead {
@@ -206,14 +217,15 @@ a {
   border-bottom: 1px solid var(--taupe);
 }
 
-/* Links left, logo centered, links + Order CTA right (stacks on mobile). */
+/* Full-width bar; links cluster symmetrically around the centered logo,
+   with the Order CTA pinned to the right edge (stacks on mobile). */
 .site-header .container {
+  max-width: none;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 1.5rem;
-  padding-top: 0.7rem;
-  padding-bottom: 0.7rem;
+  column-gap: clamp(1.75rem, 3.5vw, 3rem);
+  padding: 0.9rem clamp(1.25rem, 4vw, 2.75rem);
 }
 
 .brand {
@@ -236,15 +248,19 @@ a {
 }
 
 .nav-left {
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 .header-right {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 0.6rem 1.4rem;
+}
+
+.header-right .btn-order {
+  margin-left: auto;
 }
 
 .site-nav a {
@@ -252,6 +268,7 @@ a {
   text-decoration: none;
   padding: 0.3rem 0;
   border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
 }
 
 .site-nav a[aria-current="page"],
@@ -289,11 +306,18 @@ a {
 /* Narrow screens: logo on top, all links on one centered line, then the
    Order CTA alone on its own centered line. */
 @media (max-width: 56rem) {
+  /* The stacked header is tall; keep it static so it doesn't cover half
+     the screen while scrolling. */
+  .site-header {
+    position: static;
+  }
+
   .site-header .container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.45rem 1rem;
+    padding: 0.6rem 1.25rem;
   }
 
   .brand {
@@ -327,6 +351,10 @@ a {
   .header-right .btn-order {
     order: 3;
     margin: 0.3rem auto 0;
+  }
+
+  .site-nav a {
+    padding: 0.35rem 0;
   }
 }
 
@@ -870,7 +898,6 @@ button.btn-order {
   background: var(--navy);
   color: var(--taupe);
   padding: 3rem 0 2.5rem;
-  margin-top: 4rem;
   font-size: 0.9rem;
 }
 
