@@ -26,10 +26,10 @@ export const CONTACT = {
   email: "marchebleutx@gmail.com",
 };
 
-// Confirmed by owner 2026-08-24 (Fri/Sat close at 10:00 pm).
+// Updated by owner 2026-10-30: Sun–Thu close 8:00 pm, Fri–Sat close 9:00 pm.
 export const HOURS: { days: string; time: string }[] = [
-  { days: "Monday – Thursday", time: "7:00 am – 9:00 pm" },
-  { days: "Friday – Saturday", time: "8:00 am – 10:00 pm" },
+  { days: "Monday – Thursday", time: "7:00 am – 8:00 pm" },
+  { days: "Friday – Saturday", time: "8:00 am – 9:00 pm" },
   { days: "Sunday", time: "8:00 am – 8:00 pm" },
 ];
 
