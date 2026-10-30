@@ -1,0 +1,100 @@
+---
+import Base from "../layouts/Base.astro";
+import { Image } from "astro:assets";
+import drinksPhoto from "../assets/photos/8B7A7160.jpeg";
+
+// External application link — hiring is handled through Yield AI.
+const APPLY_URL = "https://getyieldai.com/jobs/ee437fa8-263e-499a-93ca-528584ff97d7";
+---
+
+<Base
+  title="Join the Team"
+  description="Join the team at Le Marché Bleu, Fort Worth's French-inspired café, market, and wine bar at the Shops at Clearfork. Apply online today."
+>
+  <section class="section">
+    <div class="container center">
+      <h1><span class="script-accent">Rejoignez-nous</span>Join the Team</h1>
+      <p class="lead">
+        Help us bring a little corner of France to Fort Worth.
+      </p>
+      <p style="margin-top: 1.5rem;">
+        <a class="btn-order" href={APPLY_URL} target="_blank" rel="noopener">
+          Apply Now
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="split">
+        <Image
+          src={drinksPhoto}
+          alt="Three signature Marché Bleu iced drinks lined up on a marble table"
+          widths={[640, 1200]}
+          sizes="(max-width: 48rem) 100vw, 33rem"
+        />
+        <div>
+          <h2><span class="script-accent">La Vie au Café</span>Life at Marché Bleu</h2>
+          <p class="lead">
+            From the first pour at 7&nbsp;am to the last glass at happy hour,
+            our team runs the café, the market, and the wine bar — and makes
+            every guest feel like a regular.
+          </p>
+          <p>
+            We're always looking for warm, hardworking people who love great
+            coffee, good food, and taking care of their neighbors. No
+            experience with French pastries or wine required — we'll teach
+            you everything.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="card-grid">
+        <div class="card">
+          <h3>Le Café</h3>
+          <p>
+            Baristas and café staff crafting espresso, matcha, and breakfast
+            and lunch favorites all day long.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Le Marché</h3>
+          <p>
+            Market staff curating and sharing our selection of local artisan
+            and health-conscious finds.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Le Bar à Vin</h3>
+          <p>
+            Wine bar staff pouring glasses, hosting happy hour, and helping
+            guests discover their next favorite bottle.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container center">
+      <h2><span class="script-accent">Prêt?</span>Ready to Apply?</h2>
+      <p class="lead">
+        The application only takes a few minutes. We can't wait to meet you.
+      </p>
+      <p style="margin-top: 1.5rem;">
+        <a class="btn-order" href={APPLY_URL} target="_blank" rel="noopener">
+          Apply Now
+        </a>
+      </p>
+      <p class="field-hint" style="margin-top: 1rem;">
+        Morning, afternoon, and evening shifts seven days a week — full- and
+        part-time schedules available.
+      </p>
+    </div>
+  </section>
+</Base>
