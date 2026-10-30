@@ -16,11 +16,13 @@ const fullTitle = `${title} | ${SITE.name} — Café, Market & Wine Bar, Fort Wo
 const canonical = new URL(Astro.url.pathname, SITE.domain).href;
 const currentPath = Astro.url.pathname;
 
-const NAV = [
-  { href: "/", label: "Home" },
+// Split nav around the centered logo (the logo itself is the home link;
+// Visit lives on the home page and in the footer).
+const NAV_LEFT = [
   { href: "/menu/", label: "Menu" },
   { href: "/catering/", label: "Catering + Events" },
-  { href: "/about/", label: "Visit" },
+];
+const NAV_RIGHT = [
   { href: "/careers/", label: "Join the Team" },
   { href: "/contact/", label: "Contact" },
 ];
@@ -100,17 +102,26 @@ const jsonLd = {
 
     <header class="site-header">
       <div class="container">
-        <a class="brand" href="/" aria-label={`${SITE.name} home`}>
-          <img src={logoHorizRgb.src} alt={`${SITE.name} — Market & Café`} width="220" height="54" />
-        </a>
-        <nav class="site-nav" aria-label="Main">
-          {NAV.map((item) => (
+        <nav class="site-nav nav-left" aria-label="Primary">
+          {NAV_LEFT.map((item) => (
             <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
               {item.label}
             </a>
           ))}
-          <OrderCta />
         </nav>
+        <a class="brand" href="/" aria-label={`${SITE.name} home`}>
+          <img src={logoHorizRgb.src} alt={`${SITE.name} — Market & Café`} width="220" height="54" />
+        </a>
+        <div class="header-right">
+          <nav class="site-nav nav-right" aria-label="Secondary">
+            {NAV_RIGHT.map((item) => (
+              <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
+          <OrderCta />
+        </div>
       </div>
     </header>
 
@@ -132,6 +143,7 @@ const jsonLd = {
               </li>
               <li><a href={CONTACT.phoneHref}>{CONTACT.phone}</a></li>
               <li><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
+              <li><a href="/about/">Plan your visit →</a></li>
             </ul>
           </div>
           <div>
